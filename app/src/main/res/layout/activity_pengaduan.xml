@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_pengaduancopy"
+    android:background="@drawable/bg_pengaduan"
     tools:context=".PengaduanActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
