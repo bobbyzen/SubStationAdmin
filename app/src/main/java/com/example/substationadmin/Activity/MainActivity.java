@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.btnGardu) :
-                Toast.makeText(this, "Gardu", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(MainActivity.this, LihatGarduActivity.class);
+                startActivity(intent2);
                 break;
                 
             case (R.id.btnPengaduan) :
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             
             case (R.id.btnPengajuan) :
-                Toast.makeText(this, "Pengajuan Gardu", Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(MainActivity.this, PengajuanGarduActivity.class);
+                startActivity(intent1);
                 break;
         }
     }
