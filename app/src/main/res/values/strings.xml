@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SubStationAdmin</string>
+
+    <string-array name="jenis_maintenance">
+        <item>Aman</item>
+        <item>Maintenance</item>
+        <item>Mati</item>
+    </string-array>
+
 </resources>

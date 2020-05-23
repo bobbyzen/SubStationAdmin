@@ -4,7 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_pengaduancopy"
-    tools:context=".PengaduanActivity">
+    android:background="@drawable/bg_pengaduan"
+    tools:context=".Activity.PengaduanActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPengaduan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
