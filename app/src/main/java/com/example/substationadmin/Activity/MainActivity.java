@@ -1,4 +1,4 @@
-package com.example.substationadmin;
+package com.example.substationadmin.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.substationadmin.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnPengajuan, btnPengaduan, btnGardu;

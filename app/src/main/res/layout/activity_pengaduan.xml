@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_pengaduan"
-    tools:context=".PengaduanActivity">
+    tools:context=".Activity.PengaduanActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPengaduan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
