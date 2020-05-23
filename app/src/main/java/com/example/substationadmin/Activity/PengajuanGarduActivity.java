@@ -1,7 +1,10 @@
 package com.example.substationadmin.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
+import com.example.substationadmin.R;
 
 public class PengajuanGarduActivity extends AppCompatActivity {
 
