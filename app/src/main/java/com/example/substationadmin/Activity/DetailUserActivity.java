@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.substationadmin.Model.User;
 import com.example.substationadmin.R;
 import com.example.substationadmin.UserSerializable;
 
@@ -20,20 +21,23 @@ public class DetailUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_user);
 
-        final UserSerializable userSerializable = (UserSerializable) getIntent().getSerializableExtra("data");
-        if(userSerializable != null){
-            etID.setText(userSerializable.getId());
-            etEmail.setText(userSerializable.getEmail());
-            etJabatan.setText(userSerializable.getJabatan());
-            etWilayah.setText(userSerializable.getWilayah());
-        }
-
         etID = findViewById(R.id.etID);
         etEmail = findViewById(R.id.etEmail);
         etJabatan = findViewById(R.id.etJabatan);
         etWilayah = findViewById(R.id.etWilayah);
 
         btnTombol = findViewById(R.id.btnTombol);
+
+        if(getIntent().getParcelableExtra("data") != null){
+            User user = getIntent().getParcelableExtra("data");
+            etID.setText(user.getId());
+            etEmail.setText(user.getEmail());
+            etJabatan.setText(user.getJabatan());
+            etWilayah.setText(user.getWilayah());
+        }
+        else {
+            Toast.makeText(this, "Kosong", Toast.LENGTH_SHORT).show();
+        }
 
         etID.setEnabled(false);
         etEmail.setEnabled(false);

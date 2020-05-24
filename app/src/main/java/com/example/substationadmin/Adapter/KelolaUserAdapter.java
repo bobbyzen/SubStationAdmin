@@ -53,9 +53,9 @@ public class KelolaUserAdapter extends RecyclerView.Adapter<KelolaUserAdapter.Ke
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, DetailUserActivity.class);
+                Intent intent = new Intent(holder.itemView.getContext(), DetailUserActivity.class);
                 intent.putExtra("data", listUser.get(position));
-                context.startActivity(intent);
+                holder.itemView.getContext().startActivity(intent);
             }
         });
 
