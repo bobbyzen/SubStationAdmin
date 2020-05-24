@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.example.substationadmin.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btnPengajuan, btnPengaduan, btnGardu;
+    Button btnPengajuan, btnPengaduan, btnGardu, btnKelolaUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnPengajuan = findViewById(R.id.btnPengajuan);
         btnPengajuan.setOnClickListener(this);
+
+        btnKelolaUser = findViewById(R.id.btnKelolaUser);
+        btnKelolaUser.setOnClickListener(this);
     }
 
     @Override
@@ -44,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case (R.id.btnPengajuan) :
                 Intent intent1 = new Intent(MainActivity.this, PengajuanGarduActivity.class);
                 startActivity(intent1);
+                break;
+            case (R.id.btnKelolaUser) :
+                Intent intent3 = new Intent(MainActivity.this, KelolaUserActivity.class);
+                startActivity(intent3);
                 break;
         }
     }
