@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.DetailUserActivity"></activity>
+        <activity android:name=".Activity.AddUserActivity"></activity>
+        <activity android:name=".Activity.DetailUserActivity" />
         <activity android:name=".Activity.KelolaUserActivity" />
         <activity android:name=".Activity.LihatGarduActivity" />
         <activity android:name=".Activity.PengajuanGarduActivity" />
