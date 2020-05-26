@@ -33,7 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 
 public class AddUserActivity extends AppCompatActivity {
-    EditText etID, etEmail;
+    EditText etID, etEmail, etPassword;
     Button btnTambah;
     Spinner spJabatan, spWilayah;
     String ID = "";
@@ -55,6 +55,8 @@ public class AddUserActivity extends AppCompatActivity {
 
         etID = findViewById(R.id.etID);
         etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
+
         btnTambah = findViewById(R.id.btnTambah);
 
         spJabatan = findViewById(R.id.spJabatan);
@@ -97,7 +99,7 @@ public class AddUserActivity extends AppCompatActivity {
                                     data.put("id", etID.getText().toString().trim());
                                     data.put("jabatan", arrayJabatan[jabatanIndex]);
                                     data.put("uid", mAuth.getCurrentUser().getUid());
-                                    data.put("password", "123");
+                                    data.put("password", etPassword.getText().toString().trim());
                                     data.put("wilayah", String.valueOf(wilayahIndex));
 
                                     rootRef.child("User").child(mAuth.getCurrentUser().getUid()).setValue(data);

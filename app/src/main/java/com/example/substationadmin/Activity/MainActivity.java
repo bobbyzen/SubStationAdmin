@@ -10,12 +10,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.substationadmin.R;
+import com.example.substationadmin.SaveSharedPreferences;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnPengajuan, btnPengaduan, btnGardu, btnKelolaUser;
     TextView tvNamaUser;
-
+    SaveSharedPreferences saveSharedPreferences;
     FirebaseAuth mAuth;
 
     @Override
@@ -23,22 +24,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvNamaUser = findViewById(R.id.tvNamaUser);
-
-        btnGardu = findViewById(R.id.btnGardu);
-        btnGardu.setOnClickListener(this);
-
-        btnPengaduan = findViewById(R.id.btnPengaduan);
-        btnPengaduan.setOnClickListener(this);
-
-        btnPengajuan = findViewById(R.id.btnPengajuan);
-        btnPengajuan.setOnClickListener(this);
-
-        btnKelolaUser = findViewById(R.id.btnKelolaUser);
-        btnKelolaUser.setOnClickListener(this);
+        saveSharedPreferences = new SaveSharedPreferences();
 
         mAuth = FirebaseAuth.getInstance();
-        tvNamaUser.setText(mAuth.getCurrentUser().getEmail());
+        if(saveSharedPreferences.getEmail(MainActivity.this).length() == 0){
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }else{
+
+            tvNamaUser = findViewById(R.id.tvNamaUser);
+
+            btnGardu = findViewById(R.id.btnGardu);
+            btnGardu.setOnClickListener(this);
+
+            btnPengaduan = findViewById(R.id.btnPengaduan);
+            btnPengaduan.setOnClickListener(this);
+
+            btnPengajuan = findViewById(R.id.btnPengajuan);
+            btnPengajuan.setOnClickListener(this);
+
+            btnKelolaUser = findViewById(R.id.btnKelolaUser);
+            btnKelolaUser.setOnClickListener(this);
+
+            tvNamaUser.setText(mAuth.getCurrentUser().getEmail());
+
+        }
     }
 
     @Override
