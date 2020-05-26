@@ -9,13 +9,15 @@ public class User implements Parcelable {
     private String jabatan;
     private String wilayah;
     private String email;
+    private String password;
 
-    public User(String uid, String id, String jabatan, String wilayah, String email) {
+    public User(String uid, String id, String jabatan, String wilayah, String email, String password) {
         this.uid = uid;
         this.id = id;
         this.jabatan = jabatan;
         this.wilayah = wilayah;
         this.email = email;
+        this.password = password;
     }
 
     public User() {
@@ -27,6 +29,7 @@ public class User implements Parcelable {
         jabatan = in.readString();
         wilayah = in.readString();
         email = in.readString();
+        password = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -81,6 +84,14 @@ public class User implements Parcelable {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -93,5 +104,6 @@ public class User implements Parcelable {
         parcel.writeString(jabatan);
         parcel.writeString(wilayah);
         parcel.writeString(email);
+        parcel.writeString(password);
     }
 }

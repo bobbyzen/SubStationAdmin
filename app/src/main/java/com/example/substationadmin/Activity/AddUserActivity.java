@@ -3,6 +3,8 @@ package com.example.substationadmin.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,11 +16,21 @@ import android.widget.Toast;
 
 import com.example.substationadmin.Model.User;
 import com.example.substationadmin.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthProvider;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 public class AddUserActivity extends AppCompatActivity {
     EditText etID, etEmail;
@@ -31,6 +43,10 @@ public class AddUserActivity extends AppCompatActivity {
     int jabatanIndex = 0;
 
     DatabaseReference rootRef;
+    FirebaseAuth mAuth;
+
+    String [] arrayJabatan;
+    String [] arrayWilayah;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +62,13 @@ public class AddUserActivity extends AppCompatActivity {
         spWilayah = findViewById(R.id.spWilayah);
 
         rootRef = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+
+        if(mAuth.getCurrentUser() == null){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(AddUserActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.jabatan));
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -57,17 +80,45 @@ public class AddUserActivity extends AppCompatActivity {
 
         etID.setEnabled(false);
 
+        arrayJabatan = getResources().getStringArray(R.array.jabatan);
+        arrayWilayah = getResources().getStringArray(R.array.jenis_wilayah);
+
         btnTambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AddUserActivity.this, "TESSS", Toast.LENGTH_SHORT).show();
+
+                mAuth.createUserWithEmailAndPassword(etEmail.getText().toString().trim(), "123456")
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful()){
+                                    HashMap<String,String> data = new HashMap<>();
+                                    data.put("email", etEmail.getText().toString().trim());
+                                    data.put("id", etID.getText().toString().trim());
+                                    data.put("jabatan", arrayJabatan[jabatanIndex]);
+                                    data.put("uid", mAuth.getCurrentUser().getUid());
+                                    data.put("password", "123");
+                                    data.put("wilayah", String.valueOf(wilayahIndex));
+
+                                    rootRef.child("User").child(mAuth.getCurrentUser().getUid()).setValue(data);
+                                    Toast.makeText(AddUserActivity.this, "Akun berhasil dibuat", Toast.LENGTH_SHORT).show();
+                                    mAuth.signOut();
+                                    SendUserToLoginActivity();
+                                }
+                                else{
+                                    FirebaseAuthException e = (FirebaseAuthException)task.getException();
+                                    Toast.makeText(AddUserActivity.this, "Failed Registration: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+
             }
         });
 
         spJabatan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String [] arrayJabatan = getResources().getStringArray(R.array.jabatan);
                 jabatan = arrayJabatan[i];
                 jabatanIndex = i;
                 rootRef.child("User").addValueEventListener(new ValueEventListener() {
@@ -100,7 +151,6 @@ public class AddUserActivity extends AppCompatActivity {
         spWilayah.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String [] arrayWilayah = getResources().getStringArray(R.array.jenis_wilayah);
                 wilayah = arrayWilayah[i];
                 wilayahIndex = i;
                 rootRef.child("User").addValueEventListener(new ValueEventListener() {
@@ -132,6 +182,13 @@ public class AddUserActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void SendUserToLoginActivity() {
+        Intent mainIntent = new Intent(AddUserActivity.this, LoginActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+        finish();
     }
 
     private String ConvertCounter(int counter) {
